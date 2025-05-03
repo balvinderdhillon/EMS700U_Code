@@ -68,10 +68,10 @@ class MultimodalDataset(Dataset):
   def __getitem__(self, index):
       path = self.patient_dirs[index]
       patient_id = os.path.basename(path)
-      flair = nib.load(os.path.join(path, f"{patient_id}_flair.nii.gz")).get_fdata()
-      t1 = nib.load(os.path.join(path, f"{patient_id}_t1.nii.gz")).get_fdata()
-      t1ce = nib.load(os.path.join(path, f"{patient_id}_t1ce.nii.gz")).get_fdata()
-      t2 = nib.load(os.path.join(path, f"{patient_id}_t2.nii.gz")).get_fdata()
+      flair = nib.load(os.path.join(path, f"{patient_id}_flair.nii")).get_fdata()
+      t1 = nib.load(os.path.join(path, f"{patient_id}_t1.nii")).get_fdata()
+      t1ce = nib.load(os.path.join(path, f"{patient_id}_t1ce.nii")).get_fdata()
+      t2 = nib.load(os.path.join(path, f"{patient_id}_t2.nii")).get_fdata()
 
       image = np.stack([flair, t1, t1ce, t2], axis=0).astype(np.float32)
       image = np.nan_to_num(image)
@@ -187,4 +187,4 @@ with open(os.path.join(output_dir, "metrics_summary.csv"), "w", newline="") as f
     writer.writerow(headers)
     for row in zip(*[metrics[k] for k in headers]):
         writer.writerow(row)
-print("Model and metrics saved.")
+print("saved.")
